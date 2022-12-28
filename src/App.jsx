@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import './App.css'
 import { Buscador } from './components/Buscador'
+import UserPage from './components/UserPage';
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className='App'>
       
-      <Buscador setState={setUserData}/>
+      <UserPage />
 
     </div>
   )

@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getFetch } from '../services/getFetch';
-import './styles/buscador.css';
 
 // import meta.env.VITE_API_KEY;
 
