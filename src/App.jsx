@@ -4,10 +4,12 @@ import { Buscador } from './components/Buscador'
 
 function App() {
 
+  const [userData, setUserData] = useState(null);
+
   return (
     <div className='App'>
       
-      <Buscador />
+      <Buscador setState={setUserData}/>
 
     </div>
   )
