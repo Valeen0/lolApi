@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import './styles/buscador.css';
 
+// import meta.env.VITE_API_KEY;
+
 export function Buscador() {
 
     const [name, setName] = useState();
@@ -17,7 +19,7 @@ export function Buscador() {
 
     useEffect(()=>{
 
-        
+
 
     },[name])
     
