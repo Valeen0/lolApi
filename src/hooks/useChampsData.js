@@ -1,43 +1,66 @@
 import { useEffect, useState } from 'react' 
 import { getFetch } from '../services/getFetch'
+import { protocol, region, endpoints } from '../assets/endPoints.json'
 import allChampionsData from '../assets/champions.json'
 
 export default function useChampsData (id) {
+
   const [champsData, setData] = useState({
     loading: false,
     data: {},
     error: null,
   })
 
-  const championsData = Object.entries(allChampionsData.data)
-  const url = `https://la2.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${import.meta.env.VITE_API_KEY}`
-
+  const championsData = Object.entries(allChampionsData.data);
+  const url = `${protocol}${region[1]}${endpoints.championMastery}${id}?api_key=${import.meta.env.VITE_API_KEY}`;
 
   useEffect(() => {
-
     if (!id) return
 
-    setData({ loading: true, data: {}, error: null })
-    getFetch(url)
-    .then( (championMetaData) => {
-      const help = championMetaData.slice(0,5)
+    setData({loading: true, data: {}, error: null});
+    getDataChamps(url);
 
-      championsData.map(([_, champ]) => {
+  }, [id]);
 
-        help.find( ({ championId }) => {
-          if (championId === parseInt(champ.key)) {
-            console.log(championId, champ)
+  const getDataChamps = async (url) => {
+    try {
+      const data = await getFetch(url);
+      const reformedData = data.slice(0, 6);
+
+      let groupOfData = []
+
+      reformedData.forEach( metaChamp => {
+        championsData.find( ([x, champion]) => {
+          
+          if(metaChamp.championId == champion.key){
+              groupOfData.push({
+                name: champion.name,
+                image: `http://ddragon.leagueoflegends.com/cdn/12.23.1/img/champion/${champion.id}.png`,
+                splashImage: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg`,
+                stats: champion.stats,
+                tags: champion.tags,
+                points: metaChamp.championPoints,
+                level: metaChamp.championLevel
+              });
+
+              setData( ( {data} ) =>{
+                return {
+                  loading: false,
+                  data: groupOfData,
+                  error: null
+                }
+              });
+
           }
+          
         })
-
       })
-    })
-    .catch(err => setData({ loading: false, data: {}, error: err }))
 
-  }, [id])
+    } catch (error) {
+      setData({loading: false, data: {}, error});
+    }
+  }
 
-  useEffect
-
-  
+  return {champsData};
 
 }
