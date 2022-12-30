@@ -20,7 +20,7 @@ export function useUserData(name) {
     if(!name) return;
 
     setData({ loading: true, data: {}, error: null })
-    getUserData();
+    getUserData(url);
 
   }, [name]);
 
