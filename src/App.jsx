@@ -1,10 +1,7 @@
-import { useState } from 'react'
-import { Buscador } from './components/Buscador'
 import UserPage from './components/UserPage';
+import './app.css'
 
 function App() {
-
-  const [userData, setUserData] = useState(null);
 
   return (
 

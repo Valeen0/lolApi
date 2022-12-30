@@ -1,18 +1,8 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useUserData } from '../hooks/useUserData';
 import './styles/buscador.css'
 
 
-export function Buscador({ setState }) {
-  const [name, setName] = useState(null);
-  const { userData, leagueData, champsData} = useUserData(name);
-
-  console.log(userData);
-  console.log(leagueData);
-  console.log(champsData);
-
+export function Buscador({ setName }) {
   const getName = e => {
     e.preventDefault();
     setName(e.target.player.value);
@@ -20,7 +10,7 @@ export function Buscador({ setState }) {
 
   return (
     <>
-      <form onSubmit={getName}>
+      <form onSubmit={getName} className='search_form'>
         <input className='input_text' type="text" autoComplete='off' name='player' placeholder='Buscar jugador' />
         <input type="submit" value="Buscar" />
       </form>
